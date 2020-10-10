@@ -1,6 +1,7 @@
-# NUS4all
+# NeutralNUS Terminal
+*NeutralNUS*: pronounced "neutralness"  (ˈnjuːtrəlnəs)
 
-*NUS4all* is a BLE client that is a platform agnostic terminal for NUS - Nordicsemiconductor Uart Services (BLE UART) which connects to any device that supports NUS rather than specifically servicing particular hardware. Other solutions tend to serve specific hardware and require a specific setup. *NUS4all* aims to be as generic as possible, providing a pure terminal experience over BLE NUS.
+*NeutralNUS Terminal* is a BLE client that is a platform agnostic terminal for NUS - Nordicsemiconductor Uart Services (BLE UART) which connects to any device that supports NUS rather than specifically servicing particular hardware. Other solutions tend to serve specific hardware and require a specific setup. *NeutralNUS Terminal* aims to be as generic as possible, providing a pure terminal experience over BLE NUS.
 
 ### Terminology:
 **NUS:** Nordicsemiconductor Uart Services
@@ -15,8 +16,8 @@ This project is based on [web-device-cli](https://github.com/makerdiary/web-devi
 
 ##### To be implemented:
 TCP backend:
-- *NUS4all* will have a TCP server that allows any **local** connection to the NUS on the BLE peripheral
-- *NUS4all* will have a TCP server that allows any **remote** connection to the NUS on the BLE peripheral
+- *NeutralNUS Terminal* will have a TCP server that allows any **local** connection to the NUS on the BLE peripheral
+- *NeutralNUS Terminal* will have a TCP server that allows any **remote** connection to the NUS on the BLE peripheral
 
 
 
