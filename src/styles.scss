@@ -1,0 +1,122 @@
+:root {
+    --box-color: #444444;
+    --debug-border-width: 0px;
+    // --debug-border-width: 1px;
+}
+html{
+    overflow: hidden;
+}
+body {
+    overflow: hidden;
+    margin: 0;
+    padding: 0;
+    background-color: #111111;
+    // color: whitesmoke;
+    // display: flex; 
+    justify-content: center;
+    align-content: center;
+
+    font-family: "Lucida Console", Monaco, monospace;
+
+    max-width: 100%;
+    max-height: 100%;
+    min-height: 80%;
+    border: yellow solid var(--debug-border-width); 
+
+}
+
+p {
+    color: whitesmoke
+}
+
+.box {
+
+    display: grid;
+    // grid-template-rows: 1fr 100px 1fr;
+    // grid-template-columns: 1fr;
+    max-width: 100%;
+    max-height: 100%;
+    // grid-template-rows: 1fr 4fr 1fr;
+    background-color: var(--box-color);
+    padding: 20px;
+    margin: 20px;
+    border-radius: 5px;
+    border: red solid var(--debug-border-width);
+}
+
+.heading-box {
+    display: inline-flex;
+    border: green solid var(--debug-border-width);
+    // min-height: 100%;
+    max-height: fit-content;
+    min-width: 100%;
+}
+
+
+h1 {
+    margin-left: 20px;
+}
+
+.is-primary {
+    margin-bottom: 5px;
+    font: 1.3em bold, sans-serif;
+}
+
+.content-box {
+    display: inline-flex;
+    border: green solid var(--debug-border-width);
+    min-height: 300px;
+    min-width: 100%;
+}
+
+textarea {
+    min-height: 100%;
+    min-width: 100%;
+    background-color: #111111;
+    border: none;
+    color: whitesmoke;
+    border-radius: 5px;
+    padding-left: 10px;
+    padding-right: 10px;
+    
+    scroll-behavior: smooth;
+}
+textarea:focus {
+    outline: none;
+ 
+}
+::-webkit-scrollbar {
+    width: 2px;  /* Remove scrollbar space */
+    background: transparent;  /* Optional: just make scrollbar invisible */
+}
+/* Optional: show position indicator in red */
+::-webkit-scrollbar-thumb {
+    background: #80a8FF;
+}
+
+::-webkit-resizer{
+    background: var(--box-color);
+}
+input {
+    // background-color: lightgrey;
+    // padding: 10px;
+    // border: none;
+    border-radius: 3px;
+    margin: 20px 0px 0px 0px;
+    // display: block;
+    
+    min-width: 100%;
+}
+
+.input-box {
+    display: grid;
+    grid-template-columns: 1fr 100px 100px 180px;
+    min-width: 100%;
+    border: green solid var(--debug-border-width);
+}
+
+.is-info {
+    padding: 10px 10px;
+    margin: 15px 0px 15px 15px;
+    font: 1em bold, sans-serif;
+}

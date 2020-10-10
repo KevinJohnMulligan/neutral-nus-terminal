@@ -1,6 +1,6 @@
 {
-  "short_name": "NW.js React App",
-  "name": "Create NW.js React App Sample",
+  "short_name": "Neutral NUS Terminal",
+  "name": "BLE Neutral NUS Terminal using NW.js and React",
   "icons": [
     {
       "src": "favicon.ico",

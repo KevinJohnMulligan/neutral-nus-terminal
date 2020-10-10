@@ -1,68 +1,36 @@
-This project was bootstrapped with [Create NW.js React App](https://github.com/naviapps/create-nw-react-app).
+# NUS4all
 
-## Available Scripts
+*NUS4all* is a BLE client that is a platform agnostic terminal for NUS - Nordicsemiconductor Uart Services (BLE UART) which connects to any device that supports NUS rather than specifically servicing particular hardware. Other solutions tend to serve specific hardware and require a specific setup. *NUS4all* aims to be as generic as possible, providing a pure terminal experience over BLE NUS.
 
-In the project directory, you can run:
+### Terminology:
+**NUS:** Nordicsemiconductor Uart Services
+**BLE:** Bluetooth Low Energy, Bluetooth 4.0, Bluetooth 5.0
+**BLE client/central:** A PC/mobile device that connects to BLE peripherals to collect data and send commands. The central device connects as a client to a BLE peripheral.
+**BLE server/peripheral:** The small device that performs actions in the world. The peripheral device runs the BLE server.
+**UART:** Universal Asynchronous Receiver-Transmitter
+**Platform Agnostic:** Runs on Windows/Linux/macOS
 
-### `npm start`
+### Technology:
+This project is based on [web-device-cli](https://github.com/makerdiary/web-device-cli) which makes use of the Web Bluetooth protocol. Additions were made using [React](https://reactjs.org/) and [NWjs](https://nwjs.io/) to convert web-device-cli into an agnostic desktop application.
 
-Runs the app in the development mode.<br />
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+##### To be implemented:
+TCP backend:
+- *NUS4all* will have a TCP server that allows any **local** connection to the NUS on the BLE peripheral
+- *NUS4all* will have a TCP server that allows any **remote** connection to the NUS on the BLE peripheral
 
-The page will reload if you make edits.<br />
-You will also see any lint errors in the console.
 
-### `npm test`
 
-Launches the test runner in the interactive watch mode.<br />
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+#### Etymology:
 
-### `npm run build`
+*What's in a name? **(too much)***
+I originally thought of using **NUS4all** but found that this was used as a political hashtag so I dropped it.
 
-Builds the app for production to the `build` folder.<br />
-It correctly bundles React in production mode and optimizes the build for the best performance.
+Next I went for ***agnostic NUS***  written as ***ag-NUS***
 
-The build is minified and the filenames include the hashes.<br />
-Your app is ready to be deployed!
+- agnus means lamb in latin
+- ag means silver on the period table of elements
+- therefore I could have used a silver lamb to represent the project, but this seemed too religious given the project is meant to be agnostic after all :stuck_out_tongue_winking_eye:
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+After that ***JustNUS Terminal*** - Just this. Seemed a bit bland.
 
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/code-splitting
-
-### Analyzing the Bundle Size
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size
-
-### Making a Progressive Web App
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app
-
-### Advanced Configuration
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/advanced-configuration
-
-### Deployment
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/deployment
-
-### `npm run build` fails to minify
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify
+Finally I settled on ***NeutralNUS Terminal*** - pronounced neutralness  (ˈnjuːtrəlnəs)

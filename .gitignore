@@ -20,6 +20,9 @@
 .env.development.local
 .env.test.local
 .env.production.local
+./input.txt
+./App.test.js
+./src.zip
 
 npm-debug.log*
 yarn-debug.log*
