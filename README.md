@@ -5,10 +5,15 @@
 
 ### Terminology:
 **NUS:** Nordicsemiconductor Uart Services
+
 **BLE:** Bluetooth Low Energy, Bluetooth 4.0, Bluetooth 5.0
+
 **BLE client/central:** A PC/mobile device that connects to BLE peripherals to collect data and send commands. The central device connects as a client to a BLE peripheral.
+
 **BLE server/peripheral:** The small device that performs actions in the world. The peripheral device runs the BLE server.
+
 **UART:** Universal Asynchronous Receiver-Transmitter
+
 **Platform Agnostic:** Runs on Windows/Linux/macOS
 
 ### Technology:
