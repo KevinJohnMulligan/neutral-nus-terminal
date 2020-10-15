@@ -88,7 +88,7 @@ function App() {
     }
     
     function tcpSendString(data){
-        fs.appendFile('C:/NUSinput.txt',`tcpSendString  ${data}`, function (err) {
+        fs.appendFile('C:/NUSinput.txt',`tcpSendString  ${data}\n`, function (err) {
             if (err) throw err;
             console.log('Saved!');
           });
