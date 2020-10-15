@@ -37,11 +37,7 @@
   "nwBuilder": {
     "//": "https://github.com/nwjs-community/nw-builder",
     "platforms": [
-      "osx64",
-      "win32",
-      "win64",
-      "linux32",
-      "linux64"
+      "win64"
     ],
     "version": "latest",
     "flavor": "normal",
@@ -51,5 +47,6 @@
   },
   "devDependencies": {
     "electron-react-devtools": "^0.5.3"
-  }
+  },
+  "chromium-args" : "--enable-experimental-web-platform-features"
 }
