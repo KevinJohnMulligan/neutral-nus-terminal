@@ -48,5 +48,5 @@
   "devDependencies": {
     "electron-react-devtools": "^0.5.3"
   },
-  "chromium-args" : "--enable-experimental-web-platform-features"
+  "chromium-args": "--enable-experimental-web-platform-features"
 }
