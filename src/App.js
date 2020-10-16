@@ -18,9 +18,14 @@ const net = require('net');
 const readline = require('readline');
 const fs = require('fs')
 //define the server port and host
-const port = 8080;
+const port = 8888;
 const host = '127.0.0.1';
 // let sock = undefined;
+
+// Get the current window
+var win = nw.Window.get();
+// Open the Dev Tools every time (used for debugging only), it defaults to the console which is what we need
+win.showDevTools()
 
 function App() {
     
@@ -44,30 +49,41 @@ function App() {
         server.listen(port,host,function(){
             console.log(`Server started on port ${port} at ${host}`); 
         });
+        //Ensure the server process is closed when the program closes
+        process.on('SIGTERM', () => {
+            server.close(() => {
+              console.log('Process terminated')
+            })
+          })
+
         //Declare connection listener function
         function onClientConnection(socket){
             //Log when a client connnects.
             console.log(`${socket.remoteAddress}:${socket.remotePort} Connected`);
+            
             //Listen for data from the connected client.
+            // When data is received from a client, run the callback function.
             socket.on('data',function(data){
                 //Log data from the client
                 console.log(`${socket.remoteAddress}:${socket.remotePort} Says : ${data} `);
                 addConsoleText(`${socket.remoteAddress}:${socket.remotePort} Says : ${data} `);
-                
                 //Send back the data to the client.
                 socket.write(`You fdsfs  ${data}`);
             });
             
             const fileStream = fs.createReadStream('C:/NUSinput.txt');
-
             const rl = readline.createInterface({
-              input: fileStream,
-              crlfDelay: Infinity
-            });
+                input: fileStream,
+                crlfDelay: Infinity
+              });
+              
+            //Listen for new lines in the file.
+            //When a new line is add to the file, run the callback function.
             rl.on('line', (line) => {
                 console.log(`readfromfile: ${line}\n`);
                 socket.write(`readfromfile: ${line}\n`);
             });
+
             rl.on('close', () => {
                 socket.end();
             });
@@ -79,11 +95,12 @@ function App() {
             socket.on('close',function(){
                 console.log(`${socket.remoteAddress}:${socket.remotePort} Terminated the connection`);
             });
+
             //Handle Client connection error.
             socket.on('error',function(error){
                 console.error(`${socket.remoteAddress}:${socket.remotePort} Connection Error ${error}`);
             });
-
+            
         };
     }
     
@@ -98,6 +115,7 @@ function App() {
     useEffect(()=>{
         console.log("setup server")
         setupTcpServer()
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 
 // aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
@@ -175,7 +193,7 @@ function App() {
             txCharacteristic.addEventListener('characteristicvaluechanged',
                                             handleNotifications);
             connected = true;
-        addConsoleText('\r\n' + bleDevice.name + ' Connected.\r\n');
+            addConsoleText('\r\n' + bleDevice.name + ' Connected.\r\n');
             nusSendString('\r');
         })
         .catch(error => {
@@ -246,18 +264,6 @@ function App() {
         });
     }
 
-
-
-    function initContent() {
-    addConsoleText("Welcome to Web Device CLI V0.1.0 (03/19/2019)\r\nCopyright (C) 2019  makerdiary.\r\n* Source: https://github.com/makerdiary/web-device-cli\r\n\
-    \r\nThis is a React Electron App based on a Web Command Line Interface via NUS (Nordic UART Service) using Web Bluetooth.\r\n\
-    \r\n React Electron adaptation by Kevin John Mulligan.\r\n - - - - - - - - - - - - - - - - - - - - - - - - -");
-    }
-
-    function setupNUS() {
-        initContent()
-    }
-
 // aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
 // aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
 // aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
@@ -315,14 +321,22 @@ function App() {
         e.preventDefault() 
     }
     useEffect(() => {
-        setupNUS() 
-        // eslint-disable-next-line react-hooks/exhaustive-deps
+        // initalise the console with the following text
+        const welcomeText = "Welcome to Web Device CLI V0.1.0\r\nCopyright (C) 2019  makerdiary.\r\n" + 
+                            "* Source: https://github.com/makerdiary/web-device-cli\r\n" + 
+                            "\r\nThis is a React Electron App based on a Web Command Line Interface via NUS " +
+                            "(Nordic UART Service) using Web Bluetooth.\r\n" + 
+                            "\r\n React Electron adaptation by Kevin John Mulligan." + 
+                            "\r\n - - - - - - - - - - - - - - - - - - - - - - - - -"
+
+        addConsoleText(welcomeText)
     }, [])
 
 
     useEffect(() => {
         console.log(inputText) 
-        nusSendString(inputText);      
+        nusSendString(inputText);
+        // eslint-disable-next-line react-hooks/exhaustive-deps 
     }, [setInputText])
 
 
