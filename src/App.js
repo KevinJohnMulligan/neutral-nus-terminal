@@ -1,6 +1,7 @@
 import React, {useState, useEffect, useRef} from "react"
 import './App.sass'
 import './styles.scss'
+import { utf8ByteArrayToString } from 'utf8-string-bytes'; // this module also has 'stringToUtf8ByteArray'
 
 const bleNusServiceUUID  = '6e400001-b5a3-f393-e0a9-e50e24dcca9e';
 const bleNusCharRXUUID   = '6e400002-b5a3-f393-e0a9-e50e24dcca9e';
@@ -15,12 +16,18 @@ var txCharacteristic;
 var connected = false;
 
 const net = require('net');
-const readline = require('readline');
-const fs = require('fs')
 //define the server port and host
 const port = 8888;
 const host = '127.0.0.1';
 // let sock = undefined;
+const TcpEventEmitter = require('./tcpeventemitter')
+const tcpevents = new TcpEventEmitter()
+
+// Register a listener for messages received via TCP
+tcpevents.on('receivedTcp', (arg) => {
+    const message = utf8ByteArrayToString(arg)
+    console.log('TCP received from client: ', message)
+})
 
 // Get the current window
 var win = nw.Window.get();
@@ -67,32 +74,15 @@ function App() {
                 //Log data from the client
                 console.log(`${socket.remoteAddress}:${socket.remotePort} Says : ${data} `);
                 addConsoleText(`${socket.remoteAddress}:${socket.remotePort} Says : ${data} `);
-                //Send back the data to the client.
-                socket.write(`You said  ${data}`);
+                tcpevents.received(data)
             });
-            
-            const fileStream = fs.createReadStream('C:/NUSinput.txt');
-            const rl = readline.createInterface({
-                input: fileStream,
-                crlfDelay: Infinity
-              });
-              
-            //Listen for new lines in the file.
-            //When a new line is add to the file, run the callback function.
-            rl.on('line', (line) => {
-                console.log(`readfromfile: ${line}\n`);
-                socket.write(`readfromfile: ${line}\n`);
-            });
+            // Register a listener for messages that need to be sent via TCP
+            tcpevents.on('sendTcp', (data) => {
+                console.log('TCP message to be sent: ', data)
+                socket.write(`sending from GUI: ${data}`)
+            })
 
-            // rl.on('close', () => {
-            //     socket.end();
-            // });
-            
-            // if newdata (data)=>
-            //     socket.write(data)
-            
             //Handle client connection termination.
-            
             
             // socket.on('close',function(){
             //     console.log(`${socket.remoteAddress}:${socket.remotePort} Terminated the connection`);
@@ -107,13 +97,7 @@ function App() {
     }
     
     function tcpSendString(data){
-        fs.appendFile('C:/NUSinput.txt',`tcpSendString  ${data}\n`, function (err) {
-            if (err) throw err;
-            console.log('Saved!');
-          });
-
-          
-        
+        tcpevents.send(data)
     }
 
     useEffect(()=>{
