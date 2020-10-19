@@ -272,9 +272,9 @@ function App() {
         const {name,value} = e.target
         if(name === 'inputText'){   //send when selected from a list
             console.log(`handleChange: ${name}  ${value}`);
-            send(value)
+            sendFromInput(value)
         } else if (name === 'sendButton'){
-            send(inputText)
+            sendFromInput(inputText)
             console.log(`handleChange: ${name}  ${inputText}`);
         } else {
             console.log(`handleChange: ${name}  ${value}`);
@@ -289,6 +289,10 @@ function App() {
     function send(data){
         addConsoleText(`> TX: ${data}`)  //add to local console
         nusSendString(data)             //send over BLE
+    }
+
+    function sendFromInput(data){
+        send(data)                      //general send
         tcpSendString(data)             //send over TCP
         setInputText("")                //clear input box
     }
@@ -300,7 +304,7 @@ function App() {
 
         setInputText((prevText) => prevText + key)
         if (key === "Enter") {
-            send(value)
+            sendFromInput(value)
         }
       }
         
