@@ -30,3 +30,5 @@ src/input.txt
 src.zip
 tags
 src/App.css
+*.lnk
+.gitignore
