@@ -185,7 +185,7 @@ function App() {
                                             handleNotifications);
             connected = true;
             addConsoleText('\r\n' + bleDevice.name + ' Connected.\r\n');
-            nusSendString('\r');
+            send('Connected')
         })
         .catch(error => {
             console.log('' + error);
