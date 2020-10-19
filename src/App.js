@@ -70,8 +70,8 @@ function App() {
             //Listen for data from the connected client.
             // When data is received from a client, run the callback function.
             socket.on('data',function(data){
-                //Log data from the client after removing the new line character at the end of the string
-                const message = String(data).trim()
+            //Log data from the client after converting to utf8 and removing the new line character at the end of the string
+            const message = utf8ByteArrayToString(data).trim()
                 console.log(`< ${socket.remoteAddress}:${socket.remotePort} : ${message} `);
                 addConsoleText(`< ${socket.remoteAddress}:${socket.remotePort} : ${message} `);
             tcpevents.received(message)
