@@ -24,8 +24,8 @@ const TcpEventEmitter = require('./tcpeventemitter')
 const tcpevents = new TcpEventEmitter()
 
 // Register a listener for messages received via TCP
-tcpevents.on('receivedTcp', (arg) => {
-    const message = utf8ByteArrayToString(arg)
+tcpevents.on('receivedTcp', (data) => {
+    const message = utf8ByteArrayToString(data)
     console.log('TCP received from client: ', message)
 })
 
@@ -35,7 +35,6 @@ var win = nw.Window.get();
 win.showDevTools()
 
 function App() {
-    
     const [consoleText, setConsoleText] = useState("")
     const [inputText, setInputText] = useState("")
     const [suggestionChecked, setSuggestionChecked] = useState(true)
@@ -72,18 +71,17 @@ function App() {
             // When data is received from a client, run the callback function.
             socket.on('data',function(data){
                 //Log data from the client
-                console.log(`${socket.remoteAddress}:${socket.remotePort} Says : ${data} `);
-                addConsoleText(`${socket.remoteAddress}:${socket.remotePort} Says : ${data} `);
+                console.log(`< ${socket.remoteAddress}:${socket.remotePort} : ${data} `);
+                addConsoleText(`< ${socket.remoteAddress}:${socket.remotePort} : ${data} `);
                 tcpevents.received(data)
             });
             // Register a listener for messages that need to be sent via TCP
             tcpevents.on('sendTcp', (data) => {
                 console.log('TCP message to be sent: ', data)
-                socket.write(`sending from GUI: ${data}`)
+                socket.write(data)
             })
 
-            //Handle client connection termination.
-            
+            //Handle client connection termination.         
             // socket.on('close',function(){
             //     console.log(`${socket.remoteAddress}:${socket.remotePort} Terminated the connection`);
             // });
@@ -225,7 +223,7 @@ function App() {
             str += String.fromCharCode(value.getUint8(i));
         }
         
-        addConsoleText(`<RX: ${str}`); 
+        addConsoleText(`< RX: ${str}`); 
     }
 
     function nusSendString(s) {
@@ -288,7 +286,7 @@ function App() {
     }
 
     function send(data){
-        addConsoleText(`>TX: ${data}`)  //add to local console
+        addConsoleText(`> TX: ${data}`)  //add to local console
         nusSendString(data)             //send over BLE
         tcpSendString(data)             //send over TCP
         setInputText("")                //clear input box
