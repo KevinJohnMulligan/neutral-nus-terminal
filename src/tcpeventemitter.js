@@ -10,7 +10,7 @@ class TcpEventEmitter extends EventEmitter {
     received(message) {
          // Raise an event to indicate that a TCP message has been received
          // Pass the received message contents through as an argument
-        this.emit('receiveTcp', message)
+        this.emit('receivedTcp', message)
     }
 }
 
