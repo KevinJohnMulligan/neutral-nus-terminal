@@ -74,7 +74,7 @@ function App() {
                 const message = String(data).trim()
                 console.log(`< ${socket.remoteAddress}:${socket.remotePort} : ${message} `);
                 addConsoleText(`< ${socket.remoteAddress}:${socket.remotePort} : ${message} `);
-                tcpevents.received(data)
+            tcpevents.received(message)
             });
             // Register a listener for messages that need to be sent via TCP
             tcpevents.on('sendTcp', (data) => {
