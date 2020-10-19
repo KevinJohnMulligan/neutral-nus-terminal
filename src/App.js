@@ -68,7 +68,7 @@ function App() {
                 console.log(`${socket.remoteAddress}:${socket.remotePort} Says : ${data} `);
                 addConsoleText(`${socket.remoteAddress}:${socket.remotePort} Says : ${data} `);
                 //Send back the data to the client.
-                socket.write(`You fdsfs  ${data}`);
+                socket.write(`You said  ${data}`);
             });
             
             const fileStream = fs.createReadStream('C:/NUSinput.txt');
@@ -84,17 +84,19 @@ function App() {
                 socket.write(`readfromfile: ${line}\n`);
             });
 
-            rl.on('close', () => {
-                socket.end();
-            });
+            // rl.on('close', () => {
+            //     socket.end();
+            // });
             
             // if newdata (data)=>
             //     socket.write(data)
             
             //Handle client connection termination.
-            socket.on('close',function(){
-                console.log(`${socket.remoteAddress}:${socket.remotePort} Terminated the connection`);
-            });
+            
+            
+            // socket.on('close',function(){
+            //     console.log(`${socket.remoteAddress}:${socket.remotePort} Terminated the connection`);
+            // });
 
             //Handle Client connection error.
             socket.on('error',function(error){
@@ -109,6 +111,8 @@ function App() {
             if (err) throw err;
             console.log('Saved!');
           });
+
+          
         
     }
 
