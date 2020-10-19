@@ -23,12 +23,6 @@ const host = '127.0.0.1';
 const TcpEventEmitter = require('./tcpeventemitter')
 const tcpevents = new TcpEventEmitter()
 
-// Register a listener for messages received via TCP
-tcpevents.on('receivedTcp', (data) => {
-    const message = utf8ByteArrayToString(data)
-    console.log('TCP received from client: ', message)
-})
-
 // Get the current window
 var win = nw.Window.get();
 // Open the Dev Tools every time (used for debugging only), it defaults to the console which is what we need
@@ -40,6 +34,16 @@ function App() {
     const [suggestionChecked, setSuggestionChecked] = useState(true)
     const textBoxRef = useRef(null)
     const sock = useRef(null)
+
+    useEffect(()=>{
+        console.log("setup TCP receive listener")
+        // Register a listener for messages received via TCP
+        tcpevents.on('receivedTcp', (data) => {
+            console.log('TCP received from client: ', data)
+            send(data) // send to BLE device and show the TX in the GUI
+        })
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [])
 
     function createSocket(socket){
         sock.current = socket
@@ -72,8 +76,8 @@ function App() {
             socket.on('data',function(data){
             //Log data from the client after converting to utf8 and removing the new line character at the end of the string
             const message = utf8ByteArrayToString(data).trim()
-                console.log(`< ${socket.remoteAddress}:${socket.remotePort} : ${message} `);
-                addConsoleText(`< ${socket.remoteAddress}:${socket.remotePort} : ${message} `);
+            console.log(`< ${socket.remoteAddress}:${socket.remotePort} : ${message} `);
+            addConsoleText(`< ${socket.remoteAddress}:${socket.remotePort} : ${message} `);
             tcpevents.received(message)
             });
             // Register a listener for messages that need to be sent via TCP
