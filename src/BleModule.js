@@ -35,10 +35,10 @@ class BleModule extends EventEmitter{
         this.emit('sendBle', message)
     }
 
-    addConsoleText(message) {
-         // Raise an event to indicate that a message must be added to the console
+    received(message) {
+         // Raise an event to indicate that a message has been received
          // Pass the message contents through as an argument
-        this.emit('addConsoleText', message)
+        this.emit('receivedBle', message)
     }
 
     connectionToggleUnbound() {
@@ -54,7 +54,7 @@ class BleModule extends EventEmitter{
             console.log('WebBluetooth API is not available.\r\n' +
                         'Please make sure the Web Bluetooth flag is enabled.');
             
-            this.addConsoleText('WebBluetooth API is not available on your browser.\r\n' +
+            this.received('WebBluetooth API is not available on your browser.\r\n' +
                         'Please make sure the Web Bluetooth flag is enabled.');
             return;
         }
@@ -105,13 +105,13 @@ class BleModule extends EventEmitter{
             console.log('Notifications started');
             this.txCharacteristic.addEventListener('characteristicvaluechanged',
                                             this.handleNotifications)
-            this.addConsoleText('\r\n' + this.bleDevice.name + ' Connected.\r\n');
+            this.received('\r\n' + this.bleDevice.name + ' Connected.\r\n');
             this.send('Connected')
             this.setConnected(true)
         })
         .catch(error => {
             console.log('' + error);
-            this.addConsoleText(`${error}` );
+            this.received(`${error}` );
             if(this.bleDevice && this.bleDevice.gatt.connected)
             {   
                 console.log(`This error caused the device to disconnect:  ${error}`)
@@ -139,7 +139,7 @@ class BleModule extends EventEmitter{
 
     onDisconnectedUnbound() {
         this.setConnected(false)
-        this.addConsoleText('\r\n' + this.bleDevice.name + ' Disconnected.\r\n');
+        this.received('\r\n' + this.bleDevice.name + ' Disconnected.\r\n');
     }
 
     handleNotificationsUnbound(event) {
@@ -152,7 +152,7 @@ class BleModule extends EventEmitter{
             str += String.fromCharCode(value.getUint8(i));
         }
         
-        this.addConsoleText(`< RX: ${str}`); 
+        this.received(str); 
     }
 
     nusSendStringUnbound(s) {

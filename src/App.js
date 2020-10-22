@@ -48,9 +48,10 @@ function App() {
         })
 
         console.log("setup BLE addConsoleText listener")
-        bleMod.on('addConsoleText', (data) => {
+        bleMod.on('receivedBle', (data) => {
             console.log('------- BLE addConsoleText event: ', data)
-            addConsoleText(data)
+            addConsoleText(`< RX: ${data}`)
+            tcpSendString(data)
         })
         
         // TCP: initialise the TCP server and the receive event listener
