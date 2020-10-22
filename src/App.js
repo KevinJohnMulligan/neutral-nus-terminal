@@ -23,7 +23,6 @@ const bleMod =new BleModule()
 function App() {
     const [consoleText, setConsoleText] = useState("")
     const [inputText, setInputText] = useState("")
-    const [suggestionChecked, setSuggestionChecked] = useState(true)
     const textBoxRef = useRef(null)
     const sock = useRef(null)
 
@@ -152,10 +151,6 @@ function App() {
 
     }
 
-    function handleCheck(){
-        setSuggestionChecked(!suggestionChecked) 
-    }
-
     function send(data){
         addConsoleText(`> TX: ${data}`)  //add to local console
         bleMod.nusSendString(data)       //send over BLE
@@ -221,7 +216,7 @@ function App() {
                         value={inputText} 
                         name="inputText" 
                         className="input is-primary"
-                        autoComplete={suggestionChecked? "on": "off"}
+                        autoComplete={"off"}
                         placeholder=">" 
                         onChange={handleChange} 
                         onKeyPress={keyPressed}
@@ -240,12 +235,6 @@ function App() {
                         onClick={clearConsole}
                     >
                     Clear
-                </button>
-                <button 
-                className="button is-info"
-                    onClick={handleCheck}
-                >
-                    {suggestionChecked? "Disable Suggestions": "Enable Suggestions"}
                 </button>
             </div>
         </div>
