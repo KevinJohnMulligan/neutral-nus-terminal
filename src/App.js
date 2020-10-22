@@ -28,13 +28,19 @@ function App() {
     const sock = useRef(null)
 
     useEffect(()=>{
-        // Create a BLE instance
-        console.log("setup setConnected listener")
-        bleMod.on('setConnected', (data) => {
-            console.log('setConnected: ', data)
-            console.log(bleMod.connected)
-        })
+        // Run once to initalise the program
 
+        // GUI: initalise the console with the following text
+        const welcomeText = "Welcome to Web Device CLI V0.1.0\r\nCopyright (C) 2019  makerdiary.\r\n" + 
+        "* Source: https://github.com/makerdiary/web-device-cli\r\n" + 
+        "\r\nThis is a React Electron App based on a Web Command Line Interface via NUS " +
+        "(Nordic UART Service) using Web Bluetooth.\r\n" + 
+        "\r\n React Electron adaptation by Kevin John Mulligan." + 
+        "\r\n - - - - - - - - - - - - - - - - - - - - - - - - -"
+
+        addConsoleText(welcomeText)
+
+        // BLE: initalise the send and receive event listeners
         console.log("setup BLE send listener")
         bleMod.on('sendBle', (data) => {
             console.log('------- BLE send event: ', data)
@@ -46,6 +52,10 @@ function App() {
             console.log('------- BLE addConsoleText event: ', data)
             addConsoleText(data)
         })
+        
+        // TCP: initialise the TCP server and the receive event listener
+        console.log("setup server")
+        setupTcpServer()
 
         console.log("setup TCP receive listener")
         // Register a listener for messages received via TCP
@@ -114,30 +124,9 @@ function App() {
         tcpevents.send(data)
     }
 
-    useEffect(()=>{
-        console.log("setup server")
-        setupTcpServer()
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [])
-
-// aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-// aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-// aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-// aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-// aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-// aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-// aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-
     function clearConsole(){
         setConsoleText("")
     }
-// aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-// aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-// aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-// aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-// aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-// aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-// aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
 
     function addConsoleText(t){
         textBoxRef.current.scrollTop = textBoxRef.current.scrollHeight
@@ -191,18 +180,6 @@ function App() {
     function handleSubmit(e) {
         e.preventDefault() 
     }
-    useEffect(() => {
-        // initalise the console with the following text
-        const welcomeText = "Welcome to Web Device CLI V0.1.0\r\nCopyright (C) 2019  makerdiary.\r\n" + 
-                            "* Source: https://github.com/makerdiary/web-device-cli\r\n" + 
-                            "\r\nThis is a React Electron App based on a Web Command Line Interface via NUS " +
-                            "(Nordic UART Service) using Web Bluetooth.\r\n" + 
-                            "\r\n React Electron adaptation by Kevin John Mulligan." + 
-                            "\r\n - - - - - - - - - - - - - - - - - - - - - - - - -"
-
-        addConsoleText(welcomeText)
-    }, [])
-
 
     useEffect(() => {
         console.log(inputText) 
