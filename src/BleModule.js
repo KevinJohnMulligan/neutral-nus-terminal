@@ -181,4 +181,4 @@ class BleModule extends EventEmitter{
     }
 }
 
-module.exports = BleModule
+export default BleModule
