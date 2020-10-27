@@ -42,13 +42,11 @@ function App() {
         // BLE: initalise the send and receive event listeners
         console.log("setup BLE send listener")
         bleMod.on('sendBle', (data) => {
-            console.log('------- BLE send event: ', data)
             send(data)
         })
 
         console.log("setup BLE addConsoleText listener")
         bleMod.on('receivedBle', (data) => {
-            console.log('------- BLE addConsoleText event: ', data)
             addConsoleText(`< RX: ${data}`)
             tcpSendString(data)
         })
