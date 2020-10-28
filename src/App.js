@@ -2,6 +2,7 @@ import React, {useState, useEffect, useRef} from "react"
 import './App.sass'
 import './styles.scss'
 import { utf8ByteArrayToString } from 'utf8-string-bytes'; // this module also has 'stringToUtf8ByteArray'
+import TcpEventEmitter from './tcpeventemitter'
 import  BleModule from './BleModule.js'
 
 
@@ -10,7 +11,6 @@ const net = require('net');
 const port = 8888;
 const host = '127.0.0.1';
 // let sock = undefined;
-const TcpEventEmitter = require('./tcpeventemitter')
 const tcpevents = new TcpEventEmitter()
 
 // Get the current window

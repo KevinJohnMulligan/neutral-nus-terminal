@@ -14,4 +14,4 @@ class TcpEventEmitter extends EventEmitter {
     }
 }
 
-module.exports = TcpEventEmitter
+export default TcpEventEmitter
