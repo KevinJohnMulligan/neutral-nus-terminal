@@ -12,11 +12,15 @@ const port = 8888;
 const host = '127.0.0.1';
 // let sock = undefined;
 const tcpevents = new TcpEventEmitter()
+// run in development mode?
+const isDevMode = false
 
-// Get the current window
-var win = nw.Window.get();
-// Open the Dev Tools every time (used for debugging only), it defaults to the console which is what we need
-win.showDevTools()
+if(isDevMode){
+    // Get the current window
+    var win = nw.Window.get();
+    // Open the Dev Tools every time (used for debugging only), it defaults to the console which is what we need
+    win.showDevTools()
+}
 
 const bleMod =new BleModule()
 
