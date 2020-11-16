@@ -21,6 +21,12 @@ Please [download](https://github.com/KevinJohnMulligan/neutral-nus-terminal/rele
 ### Technology:
 This project is based on [web-device-cli](https://github.com/makerdiary/web-device-cli) which makes use of the Web Bluetooth protocol. Additions were made using [React](https://reactjs.org/) and [NWjs](https://nwjs.io/) to convert web-device-cli into an agnostic desktop application.
 
+#### Features:
+- Stand alone application
+- Connects to BLE peripherals and provides a terminal interface over serial (NUS)
+- Deploys a TCP server that runs on 127.0.0.1:8888 which can be used to connect to a TCP client written in any language
+- Basic interface with automatic scrolling
+
 ##### To be implemented:
 TCP backend:
 - *NeutralNUS Terminal* will have a TCP server that allows any **local** connection to the NUS on the BLE peripheral
