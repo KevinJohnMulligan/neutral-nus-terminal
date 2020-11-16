@@ -11,17 +11,12 @@ Please [download](https://github.com/KevinJohnMulligan/neutral-nus-terminal/rele
 ---
 
 ### Terminology:
-**NUS:** Nordicsemiconductor Uart Services
-
-**BLE:** Bluetooth Low Energy, Bluetooth 4.0, Bluetooth 5.0
-
-**BLE client/central:** A PC/mobile device that connects to BLE peripherals to collect data and send commands. The central device connects as a client to a BLE peripheral.
-
-**BLE server/peripheral:** The small device that performs actions in the world. The peripheral device runs the BLE server.
-
-**UART:** Universal Asynchronous Receiver-Transmitter
-
-**Platform Agnostic:** Runs on Windows/Linux/macOS
+**NUS:** Nordicsemiconductor UART Service  <br />
+**UART:** Universal Asynchronous Receiver-Transmitter  <br />
+**BLE:** Bluetooth Low Energy, Bluetooth 4.0, Bluetooth 5.0  <br />
+**BLE client/central:** A PC/mobile device that connects to BLE peripherals to collect data and send commands. The central device connects as a client to a BLE peripheral.  <br />
+**BLE server/peripheral:** The small device that performs actions in the world. The peripheral device runs the BLE server. <br />
+**Platform Agnostic:** Runs on Windows/Linux/macOS <br />
 
 ### Technology:
 This project is based on [web-device-cli](https://github.com/makerdiary/web-device-cli) which makes use of the Web Bluetooth protocol. Additions were made using [React](https://reactjs.org/) and [NWjs](https://nwjs.io/) to convert web-device-cli into an agnostic desktop application.
