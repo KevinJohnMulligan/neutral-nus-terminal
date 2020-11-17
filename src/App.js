@@ -15,9 +15,15 @@ const tcpevents = new TcpEventEmitter()
 // run in development mode?
 const isDevMode = false
 
+// Get the current window
+var win = nw.Window.get();
+if (win.x < 500){ //if it's on the left of the screen already, move and resize it
+    win.moveTo(0, 0)
+    win.resizeTo(500, 700)
+}
+
+// if Development mode, then show the debug tools
 if(isDevMode){
-    // Get the current window
-    var win = nw.Window.get();
     // Open the Dev Tools every time (used for debugging only), it defaults to the console which is what we need
     win.showDevTools()
 }
