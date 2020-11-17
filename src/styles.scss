@@ -38,8 +38,8 @@ p {
     max-height: 100%;
     // grid-template-rows: 1fr 4fr 1fr;
     background-color: var(--box-color);
-    padding: 20px;
-    margin: 20px;
+    padding: 5px;
+    margin: 5px;
     border-radius: 5px;
     border: red solid var(--debug-border-width);
 }
@@ -54,12 +54,12 @@ p {
 
 
 h1 {
-    margin-left: 20px;
+    margin-left: 10px;
 }
 
 .is-primary {
-    margin-bottom: 5px;
-    font: 1.3em bold, sans-serif;
+    //margin-bottom: 5px;
+    font: 1.1em bold, sans-serif;
 }
 
 .content-box {
@@ -102,7 +102,7 @@ input {
     // padding: 10px;
     // border: none;
     border-radius: 3px;
-    margin: 20px 0px 0px 0px;
+    margin: 5px 0px 0px 0px;
     // display: block;
     
     min-width: 100%;
@@ -110,7 +110,7 @@ input {
 
 .input-box {
     display: grid;
-    grid-template-columns: 1fr 100px 100px 180px;
+    grid-template-columns: 1fr 70px 70px 130px;
     min-width: 100%;
     border: green solid var(--debug-border-width);
 }
