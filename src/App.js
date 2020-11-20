@@ -5,7 +5,6 @@ import { utf8ByteArrayToString } from 'utf8-string-bytes'; // this module also h
 import TcpEventEmitter from './tcpeventemitter'
 import  BleModule from './BleModule.js'
 
-
 const net = require('net');
 //define the server port and host
 const port = 8888;
@@ -40,12 +39,15 @@ function App() {
         // Run once to initalise the program
 
         // GUI: initalise the console with the following text
-        const welcomeText = "Welcome to Web Device CLI V0.1.0\r\nCopyright (C) 2019  makerdiary.\r\n" + 
-        "* Source: https://github.com/makerdiary/web-device-cli\r\n" + 
-        "\r\nThis is a React Electron App based on a Web Command Line Interface via NUS " +
-        "(Nordic UART Service) using Web Bluetooth.\r\n" + 
-        "\r\n React Electron adaptation by Kevin John Mulligan." + 
-        "\r\n - - - - - - - - - - - - - - - - - - - - - - - - -"
+        const welcomeText = 
+`Welcome to 'Neutral NUS Terminal' based on 'Web Device CLI V0.1.0'
+    Web Device CLI V0.1.0  -  Copyright (C) 2019  makerdiary
+    Source: https://github.com/makerdiary/web-device-cli
+
+This is a React NWjs App based on a Web Command Line Interface via NUS (Nordic UART Service) using Web Bluetooth.
+
+   React NWjs adaptation by Kevin John Mulligan.
+   - - - - - - - - - - - - - - - - - - - - - - -`
 
         addConsoleText(welcomeText)
 
