@@ -18,7 +18,7 @@ const isDevMode = false
 var win = nw.Window.get();
 if (win.x < 500){ //if it's on the left of the screen already, move and resize it
     win.moveTo(0, 0)
-    win.resizeTo(500, 700)
+    win.resizeTo(500, 550)
 }
 
 // if Development mode, then show the debug tools
@@ -32,6 +32,7 @@ const bleMod =new BleModule()
 function App() {
     const [consoleText, setConsoleText] = useState("")
     const [inputText, setInputText] = useState("")
+    const [isMono, setIsMono] = useState(false)
     const textBoxRef = useRef(null)
     const sock = useRef(null)
 
@@ -209,6 +210,19 @@ This is a React NWjs App based on a Web Command Line Interface via NUS (Nordic U
                 
                <h1 className="title">BLE UART</h1>
                <h1 className="title" style={{color: "#000"}}>CLI</h1>
+                <div className="heading-box-row">
+                    <div className="field">
+                        <input 
+                            id="switchMonospace" 
+                            type="checkbox" 
+                            name="switchMonospace"
+                            className="switch is-small" 
+                            checked={isMono} 
+                            onChange={()=>setIsMono(!isMono)}/>
+                        <label htmlFor="switchMonospace">Monopacing </label>
+                    </div>
+           </div>
+           </div>
            </div>
 
             <div className="content-box">
@@ -216,6 +230,7 @@ This is a React NWjs App based on a Web Command Line Interface via NUS (Nordic U
                     ref={textBoxRef}
                     readOnly = {true} 
                     value={consoleText}
+                    style={isMono? {fontFamily: "Courier"} : null}
                 />
             </div>
 

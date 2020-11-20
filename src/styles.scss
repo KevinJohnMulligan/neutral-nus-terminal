@@ -49,6 +49,14 @@ p {
     height: 50px;
     min-width: 100%;
 }
+.heading-box-row {
+    color: white;
+    display: grid;
+    grid-template-rows: 25px 20px;
+    width: 120px;
+    height: 50px;
+    border: blue solid var(--debug-border-width);
+}
 
 
 h1 {
