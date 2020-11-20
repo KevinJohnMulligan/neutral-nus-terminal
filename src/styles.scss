@@ -119,8 +119,28 @@ input {
     border: green solid var(--debug-border-width);
 }
 
-.is-info {
-    padding: 10px 10px;
-    margin: 15px 0px 15px 15px;
+.input-box-file {
+    display: grid;
+    grid-template-rows: 45px 45px;
+    min-width: 100%;
+    border: orange solid var(--debug-border-width);
+}
+
+.input-box-row {
+    color: white;
+    display: grid;
+    grid-template-columns: 1fr 130px;
+    min-width: 100%;
+    border: green solid var(--debug-border-width);
+}
+.file {
+    offset-position: 30px;
+}
+.input-box-row>p{
+    font-size: .7em;
+}
+
+.is-info, .is-warning, .is-primary, .is-danger {
+    margin: 5px 0px 5px 10px;
     font: 1em bold, sans-serif;
 }

@@ -4,6 +4,7 @@ import './styles.scss'
 import { utf8ByteArrayToString } from 'utf8-string-bytes'; // this module also has 'stringToUtf8ByteArray'
 import TcpEventEmitter from './tcpeventemitter'
 import  BleModule from './BleModule.js'
+import  FileHandler from './FileHandler.js'
 
 const net = require('net');
 //define the server port and host
@@ -13,6 +14,7 @@ const host = '127.0.0.1';
 const tcpevents = new TcpEventEmitter()
 // run in development mode?
 const isDevMode = false
+const isDevMode = true
 
 // Get the current window
 var win = nw.Window.get();
@@ -32,6 +34,7 @@ const bleMod =new BleModule()
 function App() {
     const [consoleText, setConsoleText] = useState("")
     const [inputText, setInputText] = useState("")
+    const [showFileUI, setShowFileUI] = useState(true)
     const [isMono, setIsMono] = useState(false)
     const textBoxRef = useRef(null)
     const sock = useRef(null)
@@ -208,8 +211,8 @@ This is a React NWjs App based on a Web Command Line Interface via NUS (Nordic U
                     {bleMod.connected? "Disconnect": "Connect"}
                 </button>
                 
-               <h1 className="title">BLE UART</h1>
-               <h1 className="title" style={{color: "#000"}}>CLI</h1>
+                <h1 className="title">BLE UART</h1>
+                <h1 className="title" style={{color: "#000"}}>CLI</h1>
                 <div className="heading-box-row">
                     <div className="field">
                         <input 
@@ -221,8 +224,17 @@ This is a React NWjs App based on a Web Command Line Interface via NUS (Nordic U
                             onChange={()=>setIsMono(!isMono)}/>
                         <label htmlFor="switchMonospace">Monopacing </label>
                     </div>
-           </div>
-           </div>
+                    <div className="field">
+                        <input 
+                            id="switchFileUI" 
+                            type="checkbox" 
+                            name="switchFileUI"
+                            className="switch is-small" 
+                            checked={showFileUI} 
+                            onChange={()=>setShowFileUI(!showFileUI)}/>
+                        <label htmlFor="switchFileUI">Show File UI </label>
+                    </div>
+                </div>
            </div>
 
             <div className="content-box">
@@ -261,7 +273,20 @@ This is a React NWjs App based on a Web Command Line Interface via NUS (Nordic U
                     >
                     Clear
                 </button>
+                <button 
+                        className={showFileUI?"button is-warning": "button is-info"}
+                        onClick={()=>setShowFileUI(!showFileUI)}
+                    >
+                    {showFileUI? "Hide File UI" : "Show File UI"}
+                </button>
             </div>
+            {showFileUI? 
+                <FileHandler
+                    send={bleMod.nusSendString}
+                    consoleText={consoleText}
+                    addConsoleText={addConsoleText}
+                /> 
+                : null}
         </div>
     )
 }
