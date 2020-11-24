@@ -182,7 +182,7 @@ This is a React NWjs App based on a Web Command Line Interface via NUS (Nordic U
         const {key} = e
 
         if(key !== 'Enter'){
-        setInputText((prevText) => prevText + key)
+            setInputText((prevText) => prevText + key)
         }
     }
 
@@ -216,7 +216,7 @@ This is a React NWjs App based on a Web Command Line Interface via NUS (Nordic U
         <div className='box'>
             <div className='heading-box'>
                 <button 
-                className="button is-primary"
+                className="button is-primary is-main"
                     onClick={connectionToggle}
                 >
                     {bleMod.connected? "Disconnect": "Connect"}
@@ -263,7 +263,7 @@ This is a React NWjs App based on a Web Command Line Interface via NUS (Nordic U
                         type="text" 
                         value={inputText} 
                         name="inputText" 
-                        className="input is-primary"
+                        className="input is-primary is-text-input is-small"
                         autoComplete={"off"}
                         placeholder=">" 
                         onKeyPress={handleKeyPress}
@@ -273,20 +273,20 @@ This is a React NWjs App based on a Web Command Line Interface via NUS (Nordic U
                 </form>
     
                 <button 
-                        className="button is-info"
+                        className="button is-info is-small"
                         name="sendButton" 
                         onClick={handleChange}
                     >
                     Send
                 </button>
                 <button 
-                        className="button is-info"
+                        className="button is-info is-small"
                         onClick={clearConsole}
                     >
                     Clear
                 </button>
                 <button 
-                        className={showFileUI?"button is-warning": "button is-info"}
+                        className={`is-small ${showFileUI?"button is-warning": "button is-info"}`}
                         onClick={()=>setShowFileUI(!showFileUI)}
                     >
                     {showFileUI? "Hide File UI" : "Show File UI"}

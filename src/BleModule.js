@@ -158,7 +158,7 @@ class BleModule extends EventEmitter{
     
     nusSendRawUnbound(s) {
         if(this.bleDevice && this.bleDevice.gatt.connected) {
-            console.log("nus send: " + s);
+            console.log("nus send (raw): " + s);
             this.sendNextChunk(s);
         } else {
             console.log('Not connected to a device yet.');
