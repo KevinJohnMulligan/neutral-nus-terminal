@@ -63,9 +63,12 @@ h1 {
     margin-left: 10px;
 }
 
-.is-primary {
-    //margin-bottom: 5px;
+.is-primary {    
     font: 1.1em bold, sans-serif;
+}
+.is-primary.is-main {
+    margin-top: 2px;
+    margin-left: 4px;
 }
 
 .content-box {
@@ -77,6 +80,7 @@ h1 {
 
 textarea {
     min-height: 100%;
+    max-height: 100%;
     min-width: 100%;
     background-color: #111111;
     border: none;
@@ -102,14 +106,16 @@ textarea:focus {
 ::-webkit-resizer{
     background: var(--box-color);
 }
+
 input {
     // background-color: lightgrey;
     padding: 10px;
+    margin-right: 20px;
     // border: none;
     border-radius: 3px;
     // display: block;
     
-    min-width: 100%;
+    // min-width: 100%;
 }
 
 .input-box {
@@ -123,7 +129,7 @@ input {
     display: grid;
     grid-template-rows: 45px 45px;
     min-width: 100%;
-    border: orange solid var(--debug-border-width);
+    border: rgb(255, 255, 255) solid var(--debug-border-width);
 }
 
 .input-box-row {
@@ -133,14 +139,21 @@ input {
     min-width: 100%;
     border: green solid var(--debug-border-width);
 }
-.file {
-    offset-position: 30px;
-}
+
 .input-box-row>p{
     font-size: .7em;
 }
 
 .is-info, .is-warning, .is-primary, .is-danger {
-    margin: 5px 0px 5px 10px;
+    margin: 10px 0px 5px 10px;
     font: 1em bold, sans-serif;
+}
+
+.is-primary.is-text-input {
+    margin-left: 0px;
+}
+
+.file.is-right .file-cta {
+    border-radius: 4px;
+    min-width: 130px;
 }

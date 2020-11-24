@@ -167,6 +167,10 @@ This is a React NWjs App based on a Web Command Line Interface via NUS (Nordic U
         bleMod.nusSendString(data)       //send over BLE
     }
 
+    function sendRaw(data){
+        bleMod.nusSendRaw(data)
+    }
+
     function sendFromInput(data){
         send(data)                      //general send
         tcpSendString(data)             //send over TCP
@@ -291,6 +295,7 @@ This is a React NWjs App based on a Web Command Line Interface via NUS (Nordic U
             {showFileUI? 
                 <FileHandler
                     send={bleMod.nusSendString}
+                    sendRaw={bleMod.nusSendRaw}
                     consoleText={consoleText}
                     addConsoleText={addConsoleText}
                 /> 
