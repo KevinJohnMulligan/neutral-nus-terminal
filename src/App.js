@@ -150,13 +150,10 @@ This is a React NWjs App based on a Web Command Line Interface via NUS (Nordic U
 
     
     function handleChange(e) {
-        // handleChange is currently used but the es6 linter wants it
         e.preventDefault() 
         const {name,value} = e.target
-        if(name === 'inputText'){   //send when selected from a list
-            console.log(`handleChange: ${name}  ${value}`);
-            sendFromInput(value)
-        } else if (name === 'sendButton'){
+
+        if (name === 'sendButton'){
             sendFromInput(inputText)
             console.log(`handleChange: ${name}  ${inputText}`);
         } else {
@@ -176,26 +173,36 @@ This is a React NWjs App based on a Web Command Line Interface via NUS (Nordic U
         setInputText("")                //clear input box
     }
 
-    function keyPressed(e) {
+    function handleKeyPress (e){        
         e.preventDefault() 
         const {key} = e
-        const {value} = e.target;
 
+        if(key !== 'Enter'){
         setInputText((prevText) => prevText + key)
+        }
+    }
+
+    function handleKeyUp(e) {
+        e.preventDefault() 
+        const {key} = e
+        if (key === "Backspace"){
+            setInputText((prevText) => {
+                if(prevText !== "" && prevText.length > 1){
+                    return prevText.slice(0,-1)
+                }
+                return ""
+            })
+            return
+        }
+
         if (key === "Enter") {
-            sendFromInput(value)
+            sendFromInput(inputText)
         }
       }
         
     function handleSubmit(e) {
         e.preventDefault() 
     }
-
-    useEffect(() => {
-        console.log(inputText) 
-        bleMod.nusSendString(inputText);
-        // eslint-disable-next-line react-hooks/exhaustive-deps 
-    }, [setInputText])
 
     function connectionToggle(){
         bleMod.connectionToggle()
@@ -255,8 +262,9 @@ This is a React NWjs App based on a Web Command Line Interface via NUS (Nordic U
                         className="input is-primary"
                         autoComplete={"off"}
                         placeholder=">" 
+                        onKeyPress={handleKeyPress}
+                        onKeyUp={handleKeyUp}
                         onChange={handleChange} 
-                        onKeyPress={keyPressed}
                     />
                 </form>
     
