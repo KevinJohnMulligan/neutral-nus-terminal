@@ -4,6 +4,7 @@ import './styles.scss'
 import { utf8ByteArrayToString } from 'utf8-string-bytes'; // this module also has 'stringToUtf8ByteArray'
 import TcpEventEmitter from './tcpeventemitter'
 import  BleModule from './BleModule.js'
+import TextInput from "./TextInput.js";
 import  FileHandler from './FileHandler.js'
 
 const net = require('net');
@@ -138,70 +139,15 @@ This is a React NWjs App based on a Web Command Line Interface via NUS (Nordic U
         tcpevents.send(data)
     }
 
-    function clearConsole(){
-        setConsoleText("")
-    }
-
     function addConsoleText(t){
         textBoxRef.current.scrollTop = textBoxRef.current.scrollHeight
         // textarea.scrollTop = textarea.scrollHeight;
         setConsoleText((prevText) => prevText + t + '\n')
     }
 
-    
-    function handleChange(e) {
-        e.preventDefault() 
-        const {name,value} = e.target
-
-        if (name === 'sendButton'){
-            sendFromInput(inputText)
-            console.log(`handleChange: ${name}  ${inputText}`);
-        } else {
-            console.log(`handleChange: ${name}  ${value}`);
-        }
-
-    }
-
     function send(data){
         addConsoleText(`> TX: ${data}`)  //add to local console
         bleMod.nusSendString(data)       //send over BLE
-    }
-
-    function sendFromInput(data){
-        send(data)                      //general send
-        tcpSendString(data)             //send over TCP
-        setInputText("")                //clear input box
-    }
-
-    function handleKeyPress (e){        
-        e.preventDefault() 
-        const {key} = e
-
-        if(key !== 'Enter'){
-            setInputText((prevText) => prevText + key)
-        }
-    }
-
-    function handleKeyUp(e) {
-        e.preventDefault() 
-        const {key} = e
-        if (key === "Backspace"){
-            setInputText((prevText) => {
-                if(prevText !== "" && prevText.length > 1){
-                    return prevText.slice(0,-1)
-                }
-                return ""
-            })
-            return
-        }
-
-        if (key === "Enter") {
-            sendFromInput(inputText)
-        }
-      }
-        
-    function handleSubmit(e) {
-        e.preventDefault() 
     }
 
     function connectionToggle(){
@@ -253,41 +199,14 @@ This is a React NWjs App based on a Web Command Line Interface via NUS (Nordic U
                 />
             </div>
 
-            <div className="input-box">
-                <form onSubmit={handleSubmit}>
-                    <input 
-                        type="text" 
-                        value={inputText} 
-                        name="inputText" 
-                        className="input is-primary is-text-input is-small"
-                        autoComplete={"off"}
-                        placeholder=">" 
-                        onKeyPress={handleKeyPress}
-                        onKeyUp={handleKeyUp}
-                        onChange={handleChange} 
-                    />
-                </form>
-    
-                <button 
-                        className="button is-info is-small"
-                        name="sendButton" 
-                        onClick={handleChange}
-                    >
-                    Send
-                </button>
-                <button 
-                        className="button is-info is-small"
-                        onClick={clearConsole}
-                    >
-                    Clear
-                </button>
-                <button 
-                        className={`is-small ${showFileUI?"button is-warning": "button is-info"}`}
-                        onClick={()=>setShowFileUI(!showFileUI)}
-                    >
-                    {showFileUI? "Hide File UI" : "Show File UI"}
-                </button>
-            </div>
+            <TextInput 
+                send={send}
+                tcpSendString={tcpSendString}
+                setConsoleText={setConsoleText}
+                showFileUI={showFileUI}
+                setShowFileUI={setShowFileUI}
+                />
+
             {showFileUI? 
                 <FileHandler
                     send={bleMod.nusSendString}
