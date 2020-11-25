@@ -34,7 +34,6 @@ const bleMod =new BleModule()
 
 function App() {
     const [consoleText, setConsoleText] = useState("")
-    const [inputText, setInputText] = useState("")
     const [showFileUI, setShowFileUI] = useState(true)
     const [isMono, setIsMono] = useState(false)
     const textBoxRef = useRef(null)
