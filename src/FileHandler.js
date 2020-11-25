@@ -48,11 +48,20 @@ const FileHandler = (props) => {
         return (fileArg !== null && fileArg.name!==null)
     }
 
-    function setFile (fileProp, index) {
-        if(fileProp!== undefined){
-            index === 0 ? setSelectedFileSend(fileProp) : setSelectedFileLog(fileProp)
+    /**
+    * setFile is used to assign a File Object to a stateful value.
+    * There is a React Hook state assigned to each kind of file operation
+    * @param  {File} fileProp The file selected by the user
+    * @param  {function} setFileFunction The function applicable to this file
+    */
+    function setFile (fileProp, setFileFunction) {
+        // Check whether the file object exists and is not null or undefined
+        if(fileProp){
+            // Set React State according to the operation type
+            setFileFunction(fileProp) 
         }     
     }
+
     return (
         <div className={"input-box-file"}>
 
@@ -67,7 +76,7 @@ const FileHandler = (props) => {
                         name="fileName"
                         multiple={false}
                         accept=".txt, .bin, .hex"
-                        onChange={(e)=>setFile(e.target.files[0], 0)}
+                        onChange={(e)=>setFile(e.target.files[0], setSelectedFileSend)}
                     />
                     <span className="file-cta">
                         <span className="file-icon">
@@ -99,7 +108,7 @@ const FileHandler = (props) => {
                         name="fileName"
                         multiple={false}
                         accept=".txt"
-                        onChange={(e)=>setFile(e.target.files[0], 1)}
+                        onChange={(e)=>setFile(e.target.files[0], setSelectedFileLog)}
                     />
                     <span className="file-cta">
                         <span className="file-icon">
