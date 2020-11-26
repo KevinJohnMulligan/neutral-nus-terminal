@@ -1,5 +1,7 @@
 import React, {useState} from 'react';
 const fs = require('fs')
+const chalkReq = require('chalk');
+const chalk = new chalkReq.Instance({level: 2});
  
 const FileHandler = (props) => {  
     const [selectedFileSend, setSelectedFileSend] = useState(null)
