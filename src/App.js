@@ -208,8 +208,7 @@ This is a React NWjs App based on a Web Command Line Interface via NUS (Nordic U
 
             {showFileUI? 
                 <FileHandler
-                    send={bleMod.nusSendString}
-                    sendRaw={bleMod.nusSendRaw}
+                    bleMod={bleMod}
                     consoleText={consoleText}
                     addConsoleText={addConsoleText}
                 /> 

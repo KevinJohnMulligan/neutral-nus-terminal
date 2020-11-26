@@ -42,6 +42,12 @@ class BleModule extends EventEmitter{
         this.emit('receivedBle', message)
     }
 
+    receivedRaw(message) {
+        // Raise an event to indicate that a message has been received
+        // Pass the message contents through as an argument
+       this.emit('receivedBleRaw', message)
+   }
+
     connectionToggleUnbound() {
         if (this.connected) {
             this.disconnect();
@@ -152,7 +158,7 @@ class BleModule extends EventEmitter{
         for (let i = 0; i < value.byteLength; i++) {
             str += String.fromCharCode(value.getUint8(i));
         }
-        
+        this.receivedRaw(value)
         this.received(str); 
     }
     
