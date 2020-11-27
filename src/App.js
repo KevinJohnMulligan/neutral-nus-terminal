@@ -4,7 +4,8 @@ import './styles.scss'
 import { utf8ByteArrayToString } from 'utf8-string-bytes'; // this module also has 'stringToUtf8ByteArray'
 import TcpEventEmitter from './tcpeventemitter'
 import  BleModule from './BleModule.js'
-
+import TextInput from "./TextInput.js";
+import  FileHandler from './FileHandler.js'
 
 const net = require('net');
 //define the server port and host
@@ -14,12 +15,13 @@ const host = '127.0.0.1';
 const tcpevents = new TcpEventEmitter()
 // run in development mode?
 const isDevMode = false
+const isDevMode = true
 
 // Get the current window
 var win = nw.Window.get();
 if (win.x < 500){ //if it's on the left of the screen already, move and resize it
     win.moveTo(0, 0)
-    win.resizeTo(500, 700)
+    win.resizeTo(500, 550)
 }
 
 // if Development mode, then show the debug tools
@@ -32,7 +34,8 @@ const bleMod =new BleModule()
 
 function App() {
     const [consoleText, setConsoleText] = useState("")
-    const [inputText, setInputText] = useState("")
+    const [showFileUI, setShowFileUI] = useState(true)
+    const [isMono, setIsMono] = useState(false)
     const textBoxRef = useRef(null)
     const sock = useRef(null)
 
@@ -40,12 +43,15 @@ function App() {
         // Run once to initalise the program
 
         // GUI: initalise the console with the following text
-        const welcomeText = "Welcome to Web Device CLI V0.1.0\r\nCopyright (C) 2019  makerdiary.\r\n" + 
-        "* Source: https://github.com/makerdiary/web-device-cli\r\n" + 
-        "\r\nThis is a React Electron App based on a Web Command Line Interface via NUS " +
-        "(Nordic UART Service) using Web Bluetooth.\r\n" + 
-        "\r\n React Electron adaptation by Kevin John Mulligan." + 
-        "\r\n - - - - - - - - - - - - - - - - - - - - - - - - -"
+        const welcomeText = 
+`Welcome to 'Neutral NUS Terminal' based on 'Web Device CLI V0.1.0'
+    Web Device CLI V0.1.0  -  Copyright (C) 2019  makerdiary
+    Source: https://github.com/makerdiary/web-device-cli
+
+This is a React NWjs App based on a Web Command Line Interface via NUS (Nordic UART Service) using Web Bluetooth.
+
+   React NWjs adaptation by Kevin John Mulligan.
+   - - - - - - - - - - - - - - - - - - - - - - -`
 
         addConsoleText(welcomeText)
 
@@ -132,64 +138,16 @@ function App() {
         tcpevents.send(data)
     }
 
-    function clearConsole(){
-        setConsoleText("")
-    }
-
     function addConsoleText(t){
         textBoxRef.current.scrollTop = textBoxRef.current.scrollHeight
         // textarea.scrollTop = textarea.scrollHeight;
         setConsoleText((prevText) => prevText + t + '\n')
     }
 
-    
-    function handleChange(e) {
-        // handleChange is currently used but the es6 linter wants it
-        e.preventDefault() 
-        const {name,value} = e.target
-        if(name === 'inputText'){   //send when selected from a list
-            console.log(`handleChange: ${name}  ${value}`);
-            sendFromInput(value)
-        } else if (name === 'sendButton'){
-            sendFromInput(inputText)
-            console.log(`handleChange: ${name}  ${inputText}`);
-        } else {
-            console.log(`handleChange: ${name}  ${value}`);
-        }
-
-    }
-
     function send(data){
         addConsoleText(`> TX: ${data}`)  //add to local console
         bleMod.nusSendString(data)       //send over BLE
     }
-
-    function sendFromInput(data){
-        send(data)                      //general send
-        tcpSendString(data)             //send over TCP
-        setInputText("")                //clear input box
-    }
-
-    function keyPressed(e) {
-        e.preventDefault() 
-        const {key} = e
-        const {value} = e.target;
-
-        setInputText((prevText) => prevText + key)
-        if (key === "Enter") {
-            sendFromInput(value)
-        }
-      }
-        
-    function handleSubmit(e) {
-        e.preventDefault() 
-    }
-
-    useEffect(() => {
-        console.log(inputText) 
-        bleMod.nusSendString(inputText);
-        // eslint-disable-next-line react-hooks/exhaustive-deps 
-    }, [setInputText])
 
     function connectionToggle(){
         bleMod.connectionToggle()
@@ -199,14 +157,36 @@ function App() {
         <div className='box'>
             <div className='heading-box'>
                 <button 
-                className="button is-primary"
+                className="button is-primary is-main"
                     onClick={connectionToggle}
                 >
                     {bleMod.connected? "Disconnect": "Connect"}
                 </button>
                 
-               <h1 className="title">BLE UART</h1>
-               <h1 className="title" style={{color: "#000"}}>CLI</h1>
+                <h1 className="title">BLE UART</h1>
+                <h1 className="title" style={{color: "#000"}}>CLI</h1>
+                <div className="heading-box-row">
+                    <div className="field">
+                        <input 
+                            id="switchMonospace" 
+                            type="checkbox" 
+                            name="switchMonospace"
+                            className="switch is-small" 
+                            checked={isMono} 
+                            onChange={()=>setIsMono(!isMono)}/>
+                        <label htmlFor="switchMonospace">Monopacing </label>
+                    </div>
+                    <div className="field">
+                        <input 
+                            id="switchFileUI" 
+                            type="checkbox" 
+                            name="switchFileUI"
+                            className="switch is-small" 
+                            checked={showFileUI} 
+                            onChange={()=>setShowFileUI(!showFileUI)}/>
+                        <label htmlFor="switchFileUI">Show File UI </label>
+                    </div>
+                </div>
            </div>
 
             <div className="content-box">
@@ -214,37 +194,25 @@ function App() {
                     ref={textBoxRef}
                     readOnly = {true} 
                     value={consoleText}
+                    style={isMono? {fontFamily: "Courier"} : null}
                 />
             </div>
 
-            <div className="input-box">
-                <form onSubmit={handleSubmit}>
-                    <input 
-                        type="text" 
-                        value={inputText} 
-                        name="inputText" 
-                        className="input is-primary"
-                        autoComplete={"off"}
-                        placeholder=">" 
-                        onChange={handleChange} 
-                        onKeyPress={keyPressed}
-                    />
-                </form>
-    
-                <button 
-                        className="button is-info"
-                        name="sendButton" 
-                        onClick={handleChange}
-                    >
-                    Send
-                </button>
-                <button 
-                        className="button is-info"
-                        onClick={clearConsole}
-                    >
-                    Clear
-                </button>
-            </div>
+            <TextInput 
+                send={send}
+                tcpSendString={tcpSendString}
+                setConsoleText={setConsoleText}
+                showFileUI={showFileUI}
+                setShowFileUI={setShowFileUI}
+                />
+
+            {showFileUI? 
+                <FileHandler
+                    bleMod={bleMod}
+                    consoleText={consoleText}
+                    addConsoleText={addConsoleText}
+                /> 
+                : null}
         </div>
     )
 }

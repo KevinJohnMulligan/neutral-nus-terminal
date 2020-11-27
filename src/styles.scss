@@ -5,23 +5,21 @@
 }
 html{
     overflow: hidden;
+    height: 100vh;
 }
 body {
     overflow: hidden;
     margin: 0;
     padding: 0;
     background-color: #111111;
-    // color: whitesmoke;
+    color: whitesmoke;
     // display: flex; 
     justify-content: center;
     align-content: center;
 
-    font-family: "Lucida Console", Monaco, monospace;
-
     max-width: 100%;
-    max-height: 100%;
-    min-height: 80%;
-    border: yellow solid var(--debug-border-width); 
+    min-height: 100vh;
+    border: rgb(225, 255, 0) solid var(--debug-border-width); 
 
 }
 
@@ -35,7 +33,7 @@ p {
     // grid-template-rows: 1fr 100px 1fr;
     // grid-template-columns: 1fr;
     max-width: 100%;
-    max-height: 100%;
+    max-height: 100vh;
     // grid-template-rows: 1fr 4fr 1fr;
     background-color: var(--box-color);
     padding: 5px;
@@ -45,11 +43,19 @@ p {
 }
 
 .heading-box {
-    display: inline-flex;
+    display: grid;
+    grid-template-columns: 100px 160px 1fr 120px;
     border: green solid var(--debug-border-width);
-    // min-height: 100%;
-    max-height: fit-content;
+    height: 50px;
     min-width: 100%;
+}
+.heading-box-row {
+    color: white;
+    display: grid;
+    grid-template-rows: 25px 20px;
+    width: 120px;
+    height: 50px;
+    border: blue solid var(--debug-border-width);
 }
 
 
@@ -57,20 +63,24 @@ h1 {
     margin-left: 10px;
 }
 
-.is-primary {
-    //margin-bottom: 5px;
+.is-primary {    
     font: 1.1em bold, sans-serif;
+}
+.is-primary.is-main {
+    margin-top: 2px;
+    margin-left: 4px;
 }
 
 .content-box {
     display: inline-flex;
     border: green solid var(--debug-border-width);
-    min-height: 300px;
+    height: 55vh;
     min-width: 100%;
 }
 
 textarea {
     min-height: 100%;
+    max-height: 100%;
     min-width: 100%;
     background-color: #111111;
     border: none;
@@ -78,7 +88,6 @@ textarea {
     border-radius: 5px;
     padding-left: 10px;
     padding-right: 10px;
-    
     scroll-behavior: smooth;
 }
 textarea:focus {
@@ -97,15 +106,16 @@ textarea:focus {
 ::-webkit-resizer{
     background: var(--box-color);
 }
+
 input {
     // background-color: lightgrey;
-    // padding: 10px;
+    padding: 10px;
+    margin-right: 20px;
     // border: none;
     border-radius: 3px;
-    margin: 5px 0px 0px 0px;
     // display: block;
     
-    min-width: 100%;
+    // min-width: 100%;
 }
 
 .input-box {
@@ -115,8 +125,35 @@ input {
     border: green solid var(--debug-border-width);
 }
 
-.is-info {
-    padding: 10px 10px;
-    margin: 15px 0px 15px 15px;
+.input-box-file {
+    display: grid;
+    grid-template-rows: 45px 45px;
+    min-width: 100%;
+    border: rgb(255, 255, 255) solid var(--debug-border-width);
+}
+
+.input-box-row {
+    color: white;
+    display: grid;
+    grid-template-columns: 1fr 130px;
+    min-width: 100%;
+    border: green solid var(--debug-border-width);
+}
+
+.input-box-row>p{
+    font-size: .7em;
+}
+
+.is-info, .is-warning, .is-primary, .is-danger {
+    margin: 10px 0px 5px 10px;
     font: 1em bold, sans-serif;
+}
+
+.is-primary.is-text-input {
+    margin-left: 0px;
+}
+
+.file.is-right .file-cta {
+    border-radius: 4px;
+    min-width: 130px;
 }

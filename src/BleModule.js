@@ -22,6 +22,7 @@ class BleModule extends EventEmitter{
         this.onDisconnected = this.onDisconnectedUnbound.bind(this)
         this.handleNotifications = this.handleNotificationsUnbound.bind(this)
         this.nusSendString = this.nusSendStringUnbound.bind(this)
+        this.nusSendRaw = this.nusSendRawUnbound.bind(this)
     }
 
     setConnected(isConnected){
@@ -40,6 +41,12 @@ class BleModule extends EventEmitter{
          // Pass the message contents through as an argument
         this.emit('receivedBle', message)
     }
+
+    receivedRaw(message) {
+        // Raise an event to indicate that a message has been received
+        // Pass the message contents through as an argument
+       this.emit('receivedBleRaw', message)
+   }
 
     connectionToggleUnbound() {
         if (this.connected) {
@@ -151,8 +158,17 @@ class BleModule extends EventEmitter{
         for (let i = 0; i < value.byteLength; i++) {
             str += String.fromCharCode(value.getUint8(i));
         }
-        
+        this.receivedRaw(value)
         this.received(str); 
+    }
+    
+    nusSendRawUnbound(s) {
+        if(this.bleDevice && this.bleDevice.gatt.connected) {
+            console.log("nus send (raw): " + s);
+            this.sendNextChunk(s);
+        } else {
+            console.log('Not connected to a device yet.');
+        }
     }
 
     nusSendStringUnbound(s) {
