@@ -191,7 +191,7 @@ const FileHandler = (props) => {
                         type="file" 
                         name="fileName"
                         multiple={false}
-                        accept=".txt"
+                        accept=".txt, .bin, .hex"
                         onChange={(e)=>setFile(e.target.files[0], setSelectedFileRaw)}
                     />
                     <span className="file-cta">
