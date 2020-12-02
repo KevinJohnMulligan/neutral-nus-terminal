@@ -1,7 +1,9 @@
 :root {
     --box-color: #444444;
+    --background-color: #111111;
     --debug-border-width: 0px;
     // --debug-border-width: 1px;
+    font: white;
 }
 html{
     overflow: hidden;
@@ -11,7 +13,7 @@ body {
     overflow: hidden;
     margin: 0;
     padding: 0;
-    background-color: #111111;
+    background-color: var(--background-color);
     color: whitesmoke;
     // display: flex; 
     justify-content: center;
@@ -82,7 +84,8 @@ textarea {
     min-height: 100%;
     max-height: 100%;
     min-width: 100%;
-    background-color: #111111;
+    resize: none;
+    background-color: var(--background-color);
     border: none;
     color: whitesmoke;
     border-radius: 5px;
