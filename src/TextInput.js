@@ -86,12 +86,6 @@ const TextInput = (props) => {
             >
             Clear
         </button>
-        <button 
-                className={`is-small ${props.showFileUI?"button is-warning": "button is-info"}`}
-                onClick={()=>props.setShowFileUI(!props.showFileUI)}
-            >
-            {props.showFileUI? "Hide File UI" : "Show File UI"}
-        </button>
     </div>
     )
 }

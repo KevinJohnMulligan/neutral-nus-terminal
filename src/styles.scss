@@ -1,7 +1,9 @@
 :root {
     --box-color: #444444;
+    --background-color: #111111;
     --debug-border-width: 0px;
     // --debug-border-width: 1px;
+    font: rgb(70, 67, 67);
 }
 html{
     overflow: hidden;
@@ -11,7 +13,7 @@ body {
     overflow: hidden;
     margin: 0;
     padding: 0;
-    background-color: #111111;
+    background-color: var(--background-color);
     color: whitesmoke;
     // display: flex; 
     justify-content: center;
@@ -42,6 +44,12 @@ p {
     border: red solid var(--debug-border-width);
 }
 
+.tab-button-box {
+    border: green solid var(--debug-border-width);
+    height: 40px;
+    min-width: 100%;
+}
+
 .heading-box {
     display: grid;
     grid-template-columns: 100px 160px 1fr 120px;
@@ -51,8 +59,7 @@ p {
 }
 .heading-box-row {
     color: white;
-    display: grid;
-    grid-template-rows: 25px 20px;
+    margin-top: 10px;
     width: 120px;
     height: 50px;
     border: blue solid var(--debug-border-width);
@@ -71,6 +78,10 @@ h1 {
     margin-left: 4px;
 }
 
+ul, .tabs, .tab-content {
+    border: yellow solid var(--debug-border-width);
+}
+
 .content-box {
     display: inline-flex;
     border: green solid var(--debug-border-width);
@@ -82,7 +93,8 @@ textarea {
     min-height: 100%;
     max-height: 100%;
     min-width: 100%;
-    background-color: #111111;
+    resize: none;
+    background-color: var(--background-color);
     border: none;
     color: whitesmoke;
     border-radius: 5px;
@@ -107,8 +119,11 @@ textarea:focus {
     background: var(--box-color);
 }
 
+.is-primary.is-text-input{
+    background-color: lightgrey;
+}
+
 input {
-    // background-color: lightgrey;
     padding: 10px;
     margin-right: 20px;
     // border: none;
@@ -118,9 +133,13 @@ input {
     // min-width: 100%;
 }
 
+.input, .textarea, .select select {
+    color: black;
+}
+
 .input-box {
     display: grid;
-    grid-template-columns: 1fr 70px 70px 130px;
+    grid-template-columns: 1fr 70px 70px 5px;
     min-width: 100%;
     border: green solid var(--debug-border-width);
 }
@@ -133,7 +152,6 @@ input {
 }
 
 .input-box-row {
-    color: white;
     display: grid;
     grid-template-columns: 1fr 130px;
     min-width: 100%;
@@ -156,4 +174,11 @@ input {
 .file.is-right .file-cta {
     border-radius: 4px;
     min-width: 130px;
+}
+
+.is-active {
+    display: block;
+}
+.is-inactive {
+    display: none;
 }

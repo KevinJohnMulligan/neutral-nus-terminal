@@ -34,13 +34,14 @@ const bleMod =new BleModule()
 
 function App() {
     const [consoleText, setConsoleText] = useState("")
-    const [showFileUI, setShowFileUI] = useState(true)
     const [isMono, setIsMono] = useState(false)
+    const [currentTab, setCurrentTab] = useState("terminal-page")
     const textBoxRef = useRef(null)
     const sock = useRef(null)
 
     useEffect(()=>{
         // Run once to initalise the program
+        currentPage(currentTab)
 
         // GUI: initalise the console with the following text
         const welcomeText = 
@@ -153,8 +154,73 @@ This is a React NWjs App based on a Web Command Line Interface via NUS (Nordic U
         bleMod.connectionToggle()
     }
 
+    function tabStyle (current) {
+        return currentTab===current? "is-active" : "is-hidden"
+    }
+
+    function currentPage (current) {
+        switch (current){
+            case "terminal-page":
+            return (
+            <div className="tab-content">
+            <div id="terminal-page" className={tabStyle("terminal-page")}>
+                
+                <div className="content-box">
+                    <textarea
+                        ref={textBoxRef}
+                        readOnly = {true} 
+                        value={consoleText}
+                        style={isMono? {fontFamily: "Courier"} : null}
+                    />
+                </div>
+
+                <TextInput 
+                    send={send}
+                    tcpSendString={tcpSendString}
+                    setConsoleText={setConsoleText}
+                    />
+                </div>        
+        </div>)
+            case "files-page":
+                return (
+                    <div className="tab-content">
+                    <div id="terminal-page" className={tabStyle("terminal-page")}>
+                        
+                    <div className="content-box">
+                        <textarea
+                            ref={textBoxRef}
+                            readOnly = {true} 
+                            value={consoleText}
+                            style={isMono? {fontFamily: "Courier"} : null}
+                        />
+                        </div>
+                            <FileHandler
+                            bleMod={bleMod}
+                            consoleText={consoleText}
+                            addConsoleText={addConsoleText}
+                            />
+                        </div>
+                    </div>)
+            default:
+            return (
+                <div>
+                    <h1>Empty tab</h1>
+                </div>
+            )
+        }
+    }
+
     return (
         <div className='box'>
+            <div className='tab-button-box'>
+                <div className="tabs is-right is-small is-boxed">
+                    <ul>
+                        <li className={tabStyle("terminal-page")}><a onClick={()=>setCurrentTab("terminal-page")} href="#0" >Main</a></li>
+                        <li className={tabStyle("files-page")}><a onClick={()=>setCurrentTab("files-page")} href="#2">Files</a></li>
+                        {/* <li className={tabStyle("settings-page")}><a onClick={()=>setCurrentTab("settings-page")} href="#1">Settings</a></li> */}
+                    </ul>
+                </div>
+            </div>
             <div className='heading-box'>
                 <button 
                 className="button is-primary is-main"
@@ -162,59 +228,26 @@ This is a React NWjs App based on a Web Command Line Interface via NUS (Nordic U
                 >
                     {bleMod.connected? "Disconnect": "Connect"}
                 </button>
-                
+
                 <h1 className="title">BLE UART</h1>
                 <h1 className="title" style={{color: "#000"}}>CLI</h1>
                 <div className="heading-box-row">
-                    <div className="field">
-                        <input 
-                            id="switchMonospace" 
-                            type="checkbox" 
-                            name="switchMonospace"
-                            className="switch is-small" 
-                            checked={isMono} 
-                            onChange={()=>setIsMono(!isMono)}/>
-                        <label htmlFor="switchMonospace">Monopacing </label>
+                        <div className="field">
+                            <input 
+                                id="switchMonospace" 
+                                type="checkbox" 
+                                name="switchMonospace"
+                                className="switch is-small" 
+                                checked={isMono} 
+                                onChange={()=>setIsMono(!isMono)}/>
+                            <label htmlFor="switchMonospace">Monospacing </label>
+                        </div>
                     </div>
-                    <div className="field">
-                        <input 
-                            id="switchFileUI" 
-                            type="checkbox" 
-                            name="switchFileUI"
-                            className="switch is-small" 
-                            checked={showFileUI} 
-                            onChange={()=>setShowFileUI(!showFileUI)}/>
-                        <label htmlFor="switchFileUI">Show File UI </label>
-                    </div>
-                </div>
-           </div>
-
-            <div className="content-box">
-                <textarea
-                    ref={textBoxRef}
-                    readOnly = {true} 
-                    value={consoleText}
-                    style={isMono? {fontFamily: "Courier"} : null}
-                />
             </div>
-
-            <TextInput 
-                send={send}
-                tcpSendString={tcpSendString}
-                setConsoleText={setConsoleText}
-                showFileUI={showFileUI}
-                setShowFileUI={setShowFileUI}
-                />
-
-            {showFileUI? 
-                <FileHandler
-                    bleMod={bleMod}
-                    consoleText={consoleText}
-                    addConsoleText={addConsoleText}
-                /> 
-                : null}
-        </div>
-    )
+            <div>
+                {currentPage(currentTab)}
+            </div>
+    </div>)
 }
 
 export default App

@@ -39,9 +39,11 @@
   "nwBuilder": {
     "//": "https://github.com/nwjs-community/nw-builder",
     "platforms": [
-      "win64"
+      "win64",
+      "osx64",
+      "linux64"
     ],
-    "version": "0.49.0",
+    "version": "0.50.1",
     "flavor": "normal",
     "buildDir": "./build",
     "cacheDir": "./cache",

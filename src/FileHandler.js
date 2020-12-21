@@ -11,16 +11,12 @@ const FileHandler = (props) => {
     const [isRaw, setIsRaw] = useState(false)
     
     useEffect (()=>{
-        props.bleMod.on('receivedBleRaw', (data) => {
-            if (data){
+        props.bleMod.on('receivedBleRaw', (dataview) => {
+            if (dataview){
                 let dataString = ""
-                for (let i = 0; i < data.byteLength - 1; i++) {
-                    // Convert received data into Hex format
-                    dataString = dataString + data.getInt8(i).toString(16)
+                for (let buffNumber = 0; buffNumber < dataview.byteLength; buffNumber++) {
+                    dataString = dataString + ('00' + dataview.getUint8(buffNumber).toString(16)).slice(-2)
                 }
-                console.log(`Values in file handler  ${dataString}`)
-                console.log(`Length in file handler  ${(data)? data.byteLength : "undefined"}`)
-                console.log(`File  ${(selectedFileRaw)? selectedFileRaw.path : "undefined"}`)
                 setReceivedRawData((prevData)=> prevData + dataString)
                 setIsRaw(true)            
             }
@@ -109,8 +105,8 @@ const FileHandler = (props) => {
         // Check whether the file object exists and is not null or undefined
         if(fileProp){
             // Set React State according to the operation type
-            console.log(fileProp.path)
-            setFileFunction(fileProp) 
+            console.log(fileProp.target.files[0].path)
+            setFileFunction(fileProp.target.files[0]) 
         }     
     }
 
@@ -128,7 +124,7 @@ const FileHandler = (props) => {
                         name="fileName"
                         multiple={false}
                         accept=".txt, .bin, .hex"
-                        onChange={(e)=>setFile(e.target.files[0], setSelectedFileSend)}
+                        onChange={(e)=> setFile(e, setSelectedFileSend)}
                     />
                     <span className="file-cta">
                         <span className="file-icon">
@@ -160,7 +156,7 @@ const FileHandler = (props) => {
                         name="fileName"
                         multiple={false}
                         accept=".txt"
-                        onChange={(e)=>setFile(e.target.files[0], setSelectedFileLog)}
+                        onChange={(e)=> setFile(e, setSelectedFileLog)}
                     />
                     <span className="file-cta">
                         <span className="file-icon">
@@ -191,8 +187,8 @@ const FileHandler = (props) => {
                         type="file" 
                         name="fileName"
                         multiple={false}
-                        accept=".txt"
-                        onChange={(e)=>setFile(e.target.files[0], setSelectedFileRaw)}
+                        accept=".txt, .bin, .hex"
+                        onChange={(e)=> setFile(e, setSelectedFileRaw)}
                     />
                     <span className="file-cta">
                         <span className="file-icon">
