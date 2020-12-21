@@ -11,16 +11,12 @@ const FileHandler = (props) => {
     const [isRaw, setIsRaw] = useState(false)
     
     useEffect (()=>{
-        props.bleMod.on('receivedBleRaw', (data) => {
-            if (data){
+        props.bleMod.on('receivedBleRaw', (dataview) => {
+            if (dataview){
                 let dataString = ""
-                for (let i = 0; i < data.byteLength - 1; i++) {
-                    // Convert received data into Hex format
-                    dataString = dataString + data.getInt8(i).toString(16)
+                for (let buffNumber = 0; buffNumber < dataview.byteLength; buffNumber++) {
+                    dataString = dataString + ('00' + dataview.getUint8(buffNumber).toString(16)).slice(-2)
                 }
-                console.log(`Values in file handler  ${dataString}`)
-                console.log(`Length in file handler  ${(data)? data.byteLength : "undefined"}`)
-                console.log(`File  ${(selectedFileRaw)? selectedFileRaw.path : "undefined"}`)
                 setReceivedRawData((prevData)=> prevData + dataString)
                 setIsRaw(true)            
             }
